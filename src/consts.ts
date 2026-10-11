@@ -1,3 +1,9 @@
+/** Prefix path internal ('/...') dengan base situs (mis. '/website' di GitHub Pages subpath). */
+export const url = (path: string): string => {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  return path.startsWith('/') ? base + path : path;
+};
+
 export const SITE = {
   name: 'Paguyuban Linux Solo',
   description:

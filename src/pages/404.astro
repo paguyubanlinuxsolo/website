@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { url } from '../consts';
 ---
 
 <Base title="Halaman tidak ditemukan">
@@ -12,8 +13,8 @@ import Base from '../layouts/Base.astro';
       Tautan yang kamu buka mungkin sudah pindah saat situs ini bermigrasi, atau memang tidak pernah ada.
     </p>
     <div class="mt-8 flex flex-wrap justify-center gap-4">
-      <a href="/" class="bg-brand text-ink font-bold px-6 py-3 rounded-sm hover:opacity-90">Ke beranda</a>
-      <a href="/cari/" class="border-2 border-ink/30 dark:border-paper/30 font-bold px-6 py-3 rounded-sm hover:border-brand">Cari artikel</a>
+      <a href={url('/')} class="bg-brand text-ink font-bold px-6 py-3 rounded-sm hover:opacity-90">Ke beranda</a>
+      <a href={url('/cari/')} class="border-2 border-ink/30 dark:border-paper/30 font-bold px-6 py-3 rounded-sm hover:border-brand">Cari artikel</a>
     </div>
   </div>
 </Base>

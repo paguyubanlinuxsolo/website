@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import PostCard from '../components/PostCard.astro';
-import { SITE } from '../consts';
+import { SITE, url } from '../consts';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -11,9 +11,9 @@ const [latest, ...rest] = posts;
 
 /* foto kegiatan asli dari beranda lama (caption dari situs lama) */
 const kegiatan = [
-  { img: '/images/uploads/2023/11/image2021.png', caption: 'Comgath' },
-  { img: '/images/uploads/2023/10/NC_07500-Enhanced-NR-scaled.jpg', caption: 'LOUCA23' },
-  { img: '/images/uploads/2023/11/image2009.png', caption: 'Penerjemahan LibreOffice' },
+  { img: url('/images/uploads/2023/11/image2021.png'), caption: 'Comgath' },
+  { img: url('/images/uploads/2023/10/NC_07500-Enhanced-NR-scaled.jpg'), caption: 'LOUCA23' },
+  { img: url('/images/uploads/2023/11/image2009.png'), caption: 'Penerjemahan LibreOffice' },
 ];
 ---
 
@@ -35,7 +35,7 @@ const kegiatan = [
             Gabung grup Telegram
           </a>
           <a
-            href="/tentang/"
+            href={url('/tentang/')}
             class="border-2 border-paper/40 font-bold px-6 py-3 rounded-sm hover:border-brand hover:text-brand transition-colors"
           >
             Kenali kami
@@ -43,7 +43,7 @@ const kegiatan = [
         </div>
       </div>
       <img
-        src={SITE.logoSquare}
+        src={url(SITE.logoSquare)}
         alt=""
         width="512"
         height="512"
@@ -68,7 +68,7 @@ const kegiatan = [
   <section class="mx-auto max-w-6xl px-4 py-14">
     <div class="flex items-baseline justify-between gap-4 mb-7">
       <h2 class="font-display font-bold text-3xl flex items-center"><span class="brand-mark" aria-hidden="true"></span>Tulisan Terbaru</h2>
-      <a href="/blog/" class="font-bold underline decoration-brand decoration-2 underline-offset-4 hover:text-bark dark:hover:text-brand shrink-0">Semua tulisan</a>
+      <a href={url('/blog/')} class="font-bold underline decoration-brand decoration-2 underline-offset-4 hover:text-bark dark:hover:text-brand shrink-0">Semua tulisan</a>
     </div>
     {latest && <PostCard post={latest} featured />}
     <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -81,7 +81,7 @@ const kegiatan = [
     <div class="mx-auto max-w-6xl px-4 py-14">
       <div class="flex items-baseline justify-between gap-4 mb-7">
         <h2 class="font-display font-bold text-3xl flex items-center"><span class="brand-mark" aria-hidden="true"></span>Kegiatan Kami</h2>
-        <a href="/kegiatan/" class="font-bold underline decoration-brand decoration-2 underline-offset-4 hover:text-bark dark:hover:text-brand shrink-0">Agenda lengkap</a>
+        <a href={url('/kegiatan/')} class="font-bold underline decoration-brand decoration-2 underline-offset-4 hover:text-bark dark:hover:text-brand shrink-0">Agenda lengkap</a>
       </div>
       <div class="grid gap-6 sm:grid-cols-3">
         {
@@ -94,7 +94,7 @@ const kegiatan = [
         }
       </div>
       <p class="mt-6 text-muted dark:text-muted-dark">
-        Dokumentasi lain ada di <a href="/galeri/" class="underline decoration-brand decoration-2 underline-offset-2 hover:text-bark dark:hover:text-brand">galeri</a>.
+        Dokumentasi lain ada di <a href={url('/galeri/')} class="underline decoration-brand decoration-2 underline-offset-2 hover:text-bark dark:hover:text-brand">galeri</a>.
       </p>
     </div>
   </section>

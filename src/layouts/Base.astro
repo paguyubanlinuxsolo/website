@@ -4,7 +4,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/400-italic.css';
 import '@fontsource/roboto/700.css';
 import '@fontsource-variable/roboto-slab';
-import { SITE } from '../consts';
+import { SITE, url } from '../consts';
 
 interface Props {
   title: string;
@@ -14,13 +14,14 @@ interface Props {
 }
 const { title, description = SITE.description, ogImage = SITE.logoSquare, ogType = 'website' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImageAbs = new URL(ogImage, Astro.site);
+const ogImageAbs = new URL(url(ogImage), Astro.site);
+const here = (p: string) => Astro.url.pathname === url(p);
 const orgLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: SITE.name,
   url: Astro.site?.toString(),
-  logo: new URL(SITE.logoSquare, Astro.site).toString(),
+  logo: new URL(url(SITE.logoSquare), Astro.site).toString(),
   sameAs: [SITE.contact.telegram.url, SITE.contact.instagram.url, SITE.contact.github.url, SITE.contact.linkedin.url],
 };
 ---
@@ -33,10 +34,10 @@ const orgLd = {
     <title>{title === SITE.name ? title : `${title} - ${SITE.name}`}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href={SITE.logoSquare} type="image/png" />
-    <link rel="apple-touch-icon" href={SITE.logoSquare} />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="alternate" type="application/rss+xml" title={SITE.name} href={new URL('rss.xml', Astro.site)} />
+    <link rel="icon" href={url(SITE.logoSquare)} type="image/png" />
+    <link rel="apple-touch-icon" href={url(SITE.logoSquare)} />
+    <link rel="sitemap" href={url('/sitemap-index.xml')} />
+    <link rel="alternate" type="application/rss+xml" title={SITE.name} href={new URL(url('/rss.xml'), Astro.site)} />
     <meta name="generator" content={Astro.generator} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -69,8 +70,8 @@ const orgLd = {
 
     <header class="bg-ink text-paper">
       <div class="mx-auto max-w-6xl px-4 flex items-center justify-between gap-4 py-3">
-        <a href="/" class="flex items-center gap-3 shrink-0" aria-label="Beranda Paguyuban Linux Solo">
-          <img src={SITE.logoSquare} alt="" width="44" height="44" class="h-11 w-11" />
+        <a href={url('/')} class="flex items-center gap-3 shrink-0" aria-label="Beranda Paguyuban Linux Solo">
+          <img src={url(SITE.logoSquare)} alt="" width="44" height="44" class="h-11 w-11" />
           <span class="font-display font-bold leading-tight text-paper">
             Paguyuban<br />
             <span class="text-brand">Linux Solo</span>
@@ -83,11 +84,11 @@ const orgLd = {
               SITE.nav.map((item) => (
                 <li class="relative group">
                   <a
-                    href={item.href}
-                    aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
+                    href={url(item.href)}
+                    aria-current={here(item.href) ? 'page' : undefined}
                     class:list={[
                       'flex items-center gap-1 px-3 py-2 rounded-sm hover:text-brand transition-colors',
-                      Astro.url.pathname === item.href
+                      here(item.href)
                         ? 'text-brand underline decoration-2 underline-offset-8'
                         : 'text-paper',
                     ]}
@@ -104,11 +105,11 @@ const orgLd = {
                       {item.children.map((c) => (
                         <li>
                           <a
-                            href={c.href}
-                            aria-current={Astro.url.pathname === c.href ? 'page' : undefined}
+                            href={url(c.href)}
+                            aria-current={here(c.href) ? 'page' : undefined}
                             class:list={[
                               'block px-4 py-2.5 hover:text-brand whitespace-nowrap',
-                              Astro.url.pathname === c.href ? 'text-brand font-bold' : 'text-paper',
+                              here(c.href) ? 'text-brand font-bold' : 'text-paper',
                             ]}
                           >
                             {c.label}
@@ -124,7 +125,7 @@ const orgLd = {
         </nav>
 
         <div class="flex items-center gap-1">
-          <a href="/cari/" class="p-3 rounded-sm hover:text-brand" aria-label="Cari artikel">
+          <a href={url('/cari/')} class="p-3 rounded-sm hover:text-brand" aria-label="Cari artikel">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
               <circle cx="11" cy="11" r="7"></circle>
               <path d="m20 20-3.8-3.8"></path>
@@ -165,12 +166,12 @@ const orgLd = {
               .map((item) => (
                 <li>
                   <a
-                    href={item.href}
-                    aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
+                    href={url(item.href)}
+                    aria-current={here(item.href) ? 'page' : undefined}
                     class:list={[
                       'block px-3 py-2.5 rounded-sm hover:text-brand',
                       item.sub && 'pl-7',
-                      Astro.url.pathname === item.href ? 'text-brand font-bold' : 'text-paper',
+                      here(item.href) ? 'text-brand font-bold' : 'text-paper',
                     ]}
                   >
                     {item.label}
@@ -189,7 +190,7 @@ const orgLd = {
     <footer class="bg-ink text-paper mt-16">
       <div class="mx-auto max-w-6xl px-4 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
         <div>
-          <img src={SITE.logoLandscape} alt="Paguyuban Linux Solo" width="200" height="60" class="h-12 w-auto mb-4" loading="lazy" />
+          <img src={url(SITE.logoLandscape)} alt="Paguyuban Linux Solo" width="200" height="60" class="h-12 w-auto mb-4" loading="lazy" />
           <p class="text-muted-dark max-w-prose">{SITE.description}</p>
         </div>
         <div>
@@ -201,13 +202,13 @@ const orgLd = {
                 .filter((i) => i.href !== '/')
                 .map((item) => (
                   <li>
-                    <a href={item.href} class="text-muted-dark hover:text-brand">
+                    <a href={url(item.href)} class="text-muted-dark hover:text-brand">
                       {item.label}
                     </a>
                   </li>
                 ))
             }
-            <li><a href="/rss.xml" class="text-muted-dark hover:text-brand">RSS Feed</a></li>
+            <li><a href={url('/rss.xml')} class="text-muted-dark hover:text-brand">RSS Feed</a></li>
           </ul>
         </div>
         <div>

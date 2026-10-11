@@ -3,6 +3,7 @@ import type { Page } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import PostCard from './PostCard.astro';
 import Pagination from './Pagination.astro';
+import { url } from '../consts';
 
 interface Props {
   heading: string;
@@ -26,7 +27,7 @@ const { heading, intro, page } = Astro.props;
       </div>
     ) : (
       <p class="mt-8 text-muted dark:text-muted-dark">
-        Belum ada tulisan di sini. Lihat semua tulisan di <a href="/blog/" class="underline decoration-brand decoration-2 underline-offset-2">halaman blog</a>.
+        Belum ada tulisan di sini. Lihat semua tulisan di <a href={url('/blog/')} class="underline decoration-brand decoration-2 underline-offset-2">halaman blog</a>.
       </p>
     )
   }

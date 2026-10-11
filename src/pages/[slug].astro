@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import PostCard from '../components/PostCard.astro';
-import { SITE } from '../consts';
+import { SITE, url } from '../consts';
 
 export async function getStaticPaths() {
   const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
@@ -45,11 +45,11 @@ const articleLd = isPost
       '@type': 'Article',
       headline: title,
       description,
-      image: heroImage ? new URL(heroImage, Astro.site).toString() : undefined,
+      image: heroImage ? new URL(url(heroImage), Astro.site).toString() : undefined,
       datePublished: pubDate.toISOString(),
       dateModified: (updatedDate ?? pubDate).toISOString(),
       author: { '@type': 'Person', name: author },
-      publisher: { '@type': 'Organization', name: SITE.name, logo: { '@type': 'ImageObject', url: new URL(SITE.logoSquare, Astro.site).toString() } },
+      publisher: { '@type': 'Organization', name: SITE.name, logo: { '@type': 'ImageObject', url: new URL(url(SITE.logoSquare), Astro.site).toString() } },
       mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).toString(),
     }
   : null;
@@ -81,7 +81,7 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).toString();
         isPost && entry.data.categories.length > 0 && (
           <p class="mt-4 flex flex-wrap gap-2">
             {entry.data.categories.map((c: string) => (
-              <a href={`/category/${c}/`} class="text-xs font-bold uppercase tracking-wide px-2 py-1 bg-paper-soft dark:bg-ink-soft border border-ink/15 dark:border-paper/15 rounded-sm hover:border-brand">
+              <a href={url(`/category/${c}/`)} class="text-xs font-bold uppercase tracking-wide px-2 py-1 bg-paper-soft dark:bg-ink-soft border border-ink/15 dark:border-paper/15 rounded-sm hover:border-brand">
                 {SITE.categoryLabels[c] ?? c}
               </a>
             ))}
@@ -92,7 +92,7 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
     {
       isPost && heroImage && (
-        <img src={heroImage} alt="" width="1024" height="576" class="mt-8 rounded-md w-full max-w-4xl aspect-video object-cover" fetchpriority="high" />
+        <img src={url(heroImage)} alt="" width="1024" height="576" class="mt-8 rounded-md w-full max-w-4xl aspect-video object-cover" fetchpriority="high" />
       )
     }
 
@@ -134,7 +134,7 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).toString();
           {entry.data.tags.length > 0 && (
             <p class="flex flex-wrap gap-2 mb-6">
               {entry.data.tags.map((t: string) => (
-                <a href={`/tag/${t}/`} class="text-sm px-2 py-0.5 text-muted dark:text-muted-dark hover:text-bark dark:hover:text-brand underline underline-offset-4 decoration-ink/25 dark:decoration-paper/25 hover:decoration-brand">
+                <a href={url(`/tag/${t}/`)} class="text-sm px-2 py-0.5 text-muted dark:text-muted-dark hover:text-bark dark:hover:text-brand underline underline-offset-4 decoration-ink/25 dark:decoration-paper/25 hover:decoration-brand">
                   #{t}
                 </a>
               ))}
@@ -151,7 +151,7 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
           <nav aria-label="Post sebelum & sesudah" class="mt-8 grid gap-4 sm:grid-cols-2">
             {prev ? (
-              <a href={`/${prev.data.slug}/`} class="border border-ink/15 dark:border-paper/15 rounded-md p-4 hover:border-brand">
+              <a href={url(`/${prev.data.slug}/`)} class="border border-ink/15 dark:border-paper/15 rounded-md p-4 hover:border-brand">
                 <span class="text-sm text-muted dark:text-muted-dark">&larr; Lebih lama</span>
                 <span class="block font-display font-bold mt-1">{prev.data.title}</span>
               </a>
@@ -159,7 +159,7 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).toString();
               <span />
             )}
             {next && (
-              <a href={`/${next.data.slug}/`} class="border border-ink/15 dark:border-paper/15 rounded-md p-4 hover:border-brand sm:text-right">
+              <a href={url(`/${next.data.slug}/`)} class="border border-ink/15 dark:border-paper/15 rounded-md p-4 hover:border-brand sm:text-right">
                 <span class="text-sm text-muted dark:text-muted-dark">Lebih baru &rarr;</span>
                 <span class="block font-display font-bold mt-1">{next.data.title}</span>
               </a>

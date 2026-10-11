@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { url } from '../consts';
 ---
 
 <Base title="Cari" description="Cari artikel dan halaman di situs Paguyuban Linux Solo.">
@@ -13,14 +14,14 @@ import Base from '../layouts/Base.astro';
     <noscript>
       <p class="mt-4">
         Pencarian membutuhkan JavaScript. Sebagai alternatif, jelajahi
-        <a href="/blog/" class="underline decoration-brand decoration-2 underline-offset-2">arsip blog</a>.
+        <a href={url('/blog/')} class="underline decoration-brand decoration-2 underline-offset-2">arsip blog</a>.
       </p>
     </noscript>
   </div>
 </Base>
 
-<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
-<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<link rel="stylesheet" href={url('/pagefind/pagefind-ui.css')} />
+<script is:inline src={url('/pagefind/pagefind-ui.js')}></script>
 <script is:inline>
   window.addEventListener('DOMContentLoaded', () => {
     if (typeof PagefindUI !== 'undefined') {

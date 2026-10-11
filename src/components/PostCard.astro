@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { SITE } from '../consts';
+import { SITE, url } from '../consts';
 import FormattedDate from './FormattedDate.astro';
 
 interface Props {
@@ -20,9 +20,9 @@ const { title, description, heroImage, pubDate, categories } = post.data;
 >
   {
     heroImage && (
-      <a href={`/${post.data.slug}/`} tabindex="-1" aria-hidden="true" class:list={[featured || 'block']}>
+      <a href={url(`/${post.data.slug}/`)} tabindex="-1" aria-hidden="true" class:list={[featured || 'block']}>
         <img
-          src={heroImage}
+          src={url(heroImage)}
           alt=""
           width="640"
           height="360"
@@ -37,14 +37,14 @@ const { title, description, heroImage, pubDate, categories } = post.data;
       <FormattedDate date={pubDate} />
       {
         categories.map((c) => (
-          <a href={`/category/${c}/`} class="font-bold uppercase tracking-wide text-xs hover:text-bark dark:hover:text-brand underline-offset-4 hover:underline">
+          <a href={url(`/category/${c}/`)} class="font-bold uppercase tracking-wide text-xs hover:text-bark dark:hover:text-brand underline-offset-4 hover:underline">
             {SITE.categoryLabels[c] ?? c}
           </a>
         ))
       }
     </p>
     <h3 class:list={['font-display font-bold leading-snug', featured ? 'text-2xl' : 'text-lg']}>
-      <a href={`/${post.data.slug}/`} class="group-hover:text-bark dark:group-hover:text-brand">
+      <a href={url(`/${post.data.slug}/`)} class="group-hover:text-bark dark:group-hover:text-brand">
         {title}
       </a>
     </h3>
