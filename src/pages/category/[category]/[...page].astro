@@ -1,0 +1,28 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import PostGrid from '../../../components/PostGrid.astro';
+import { SITE } from '../../../consts';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  const categories = [...new Set(posts.flatMap((p) => p.data.categories))];
+  return categories.flatMap((category) =>
+    paginate(
+      posts.filter((p) => p.data.categories.includes(category)),
+      { params: { category }, pageSize: 9 }
+    )
+  );
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const { category } = Astro.params;
+const label = SITE.categoryLabels[category!] ?? category!;
+---
+
+<Base title={`Kategori: ${label}`} description={`Semua tulisan Paguyuban Linux Solo dalam kategori ${label}.`}>
+  <PostGrid heading={`Kategori: ${label}`} page={page} />
+</Base>

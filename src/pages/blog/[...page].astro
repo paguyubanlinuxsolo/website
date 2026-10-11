@@ -1,0 +1,19 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostGrid from '../../components/PostGrid.astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  return paginate(posts, { pageSize: 9 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Base title="Blog" description="Tulisan, tutorial GNU/Linux, dan liputan kegiatan Paguyuban Linux Solo.">
+  <PostGrid heading="Blog" intro="Tutorial GNU/Linux, catatan oprek, dan liputan kegiatan komunitas." page={page} />
+</Base>

@@ -1,0 +1,36 @@
+---
+import type { Page } from 'astro';
+
+interface Props {
+  page: Page<unknown>;
+}
+const { page } = Astro.props;
+---
+
+{
+  page.lastPage > 1 && (
+    <nav aria-label="Navigasi halaman" class="mt-10 flex items-center justify-center gap-4">
+      {page.url.prev ? (
+        <a href={page.url.prev} class="px-4 py-2 border border-ink/20 dark:border-paper/20 rounded-sm font-bold hover:border-brand hover:text-bark dark:hover:text-brand">
+          &larr; Lebih baru
+        </a>
+      ) : (
+        <span class="px-4 py-2 text-muted dark:text-muted-dark" aria-hidden="true">
+          &larr; Lebih baru
+        </span>
+      )}
+      <span class="text-muted dark:text-muted-dark">
+        Hal. {page.currentPage} / {page.lastPage}
+      </span>
+      {page.url.next ? (
+        <a href={page.url.next} class="px-4 py-2 border border-ink/20 dark:border-paper/20 rounded-sm font-bold hover:border-brand hover:text-bark dark:hover:text-brand">
+          Lebih lama &rarr;
+        </a>
+      ) : (
+        <span class="px-4 py-2 text-muted dark:text-muted-dark" aria-hidden="true">
+          Lebih lama &rarr;
+        </span>
+      )}
+    </nav>
+  )
+}

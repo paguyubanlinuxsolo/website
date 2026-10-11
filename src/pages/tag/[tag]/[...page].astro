@@ -1,0 +1,26 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import PostGrid from '../../../components/PostGrid.astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+  return tags.flatMap((tag) =>
+    paginate(
+      posts.filter((p) => p.data.tags.includes(tag)),
+      { params: { tag }, pageSize: 9 }
+    )
+  );
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const { tag } = Astro.params;
+---
+
+<Base title={`Tag: #${tag}`} description={`Semua tulisan Paguyuban Linux Solo dengan tag ${tag}.`}>
+  <PostGrid heading={`Tag: #${tag}`} page={page} />
+</Base>

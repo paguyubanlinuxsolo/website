@@ -1,16 +1,101 @@
 ---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import { SITE } from '../consts';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const [latest, ...rest] = posts;
+
+/* foto kegiatan asli dari beranda lama (caption dari situs lama) */
+const kegiatan = [
+  { img: '/images/uploads/2023/11/image2021.png', caption: 'Comgath' },
+  { img: '/images/uploads/2023/10/NC_07500-Enhanced-NR-scaled.jpg', caption: 'LOUCA23' },
+  { img: '/images/uploads/2023/11/image2009.png', caption: 'Penerjemahan LibreOffice' },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base title={SITE.name}>
+  <!-- Hero: identitas komunitas. Gelap di kedua tema = kontinuitas header gelap situs lama -->
+  <section class="bg-ink text-paper">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:py-24 grid gap-10 sm:grid-cols-[1fr_auto] items-center">
+      <div class="max-w-xl">
+        <h1 class="font-display font-bold text-4xl sm:text-5xl leading-tight">
+          Paguyuban <span class="bg-brand text-ink px-2">Linux</span> Solo
+        </h1>
+        <p class="mt-5 text-lg text-muted-dark">{SITE.description}.</p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a
+            href={SITE.contact.telegram.url}
+            rel="noopener"
+            class="bg-brand text-ink font-bold px-6 py-3 rounded-sm hover:bg-paper transition-colors"
+          >
+            Gabung grup Telegram
+          </a>
+          <a
+            href="/tentang/"
+            class="border-2 border-paper/40 font-bold px-6 py-3 rounded-sm hover:border-brand hover:text-brand transition-colors"
+          >
+            Kenali kami
+          </a>
+        </div>
+      </div>
+      <img
+        src={SITE.logoSquare}
+        alt=""
+        width="512"
+        height="512"
+        class="hidden sm:block w-48 lg:w-60 h-auto justify-self-center"
+        fetchpriority="high"
+      />
+    </div>
+  </section>
+
+  <!-- Band kuning "Tentang Kami": section khas beranda lama, dipertahankan sebagai identitas -->
+  <section class="bg-brand text-ink">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:flex sm:items-center sm:gap-8">
+      <h2 class="font-display font-bold text-2xl shrink-0 mb-3 sm:mb-0">Sejak 2019</h2>
+      <p class="max-w-3xl font-medium">
+        Meetup rutin, community gathering, webinar, dan kolaborasi workshop bersama komunitas dalam maupun luar kota
+        Solo. Terbuka untuk siapa saja : pengguna lama, pemula, atau yang sekadar penasaran dengan GNU/Linux.
+      </p>
+    </div>
+  </section>
+
+  <!-- Tulisan terbaru: 1 besar (terbaru) + grid -->
+  <section class="mx-auto max-w-6xl px-4 py-14">
+    <div class="flex items-baseline justify-between gap-4 mb-7">
+      <h2 class="font-display font-bold text-3xl flex items-center"><span class="brand-mark" aria-hidden="true"></span>Tulisan Terbaru</h2>
+      <a href="/blog/" class="font-bold underline decoration-brand decoration-2 underline-offset-4 hover:text-bark dark:hover:text-brand shrink-0">Semua tulisan</a>
+    </div>
+    {latest && <PostCard post={latest} featured />}
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {rest.slice(0, 6).map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+
+  <!-- Kegiatan: foto asli kegiatan komunitas -->
+  <section class="bg-paper-soft dark:bg-ink-soft">
+    <div class="mx-auto max-w-6xl px-4 py-14">
+      <div class="flex items-baseline justify-between gap-4 mb-7">
+        <h2 class="font-display font-bold text-3xl flex items-center"><span class="brand-mark" aria-hidden="true"></span>Kegiatan Kami</h2>
+        <a href="/kegiatan/" class="font-bold underline decoration-brand decoration-2 underline-offset-4 hover:text-bark dark:hover:text-brand shrink-0">Agenda lengkap</a>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-3">
+        {
+          kegiatan.map((k) => (
+            <figure>
+              <img src={k.img} alt={`Foto kegiatan ${k.caption}`} width="640" height="427" loading="lazy" class="rounded-md aspect-[3/2] object-cover w-full" />
+              <figcaption class="mt-2 font-display font-bold">{k.caption}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      <p class="mt-6 text-muted dark:text-muted-dark">
+        Dokumentasi lain ada di <a href="/galeri/" class="underline decoration-brand decoration-2 underline-offset-2 hover:text-bark dark:hover:text-brand">galeri</a>.
+      </p>
+    </div>
+  </section>
+</Base>

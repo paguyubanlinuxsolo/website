@@ -1,0 +1,202 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import PostCard from '../components/PostCard.astro';
+import { SITE } from '../consts';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  // halaman kontak dibangun khusus di /kontak (src/pages/kontak.astro)
+  const pages = await getCollection('pages', ({ data }) => !data.draft && data.slug !== 'kontak');
+  return [
+    ...posts.map((entry, i) => ({
+      params: { slug: entry.data.slug },
+      props: { entry, kind: 'post' as const, prev: posts[i + 1], next: posts[i - 1], all: posts },
+    })),
+    ...pages.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry, kind: 'page' as const } })),
+  ];
+}
+
+const { entry, kind, prev, next, all } = Astro.props;
+const { title, description, heroImage, pubDate, updatedDate, author } = entry.data;
+const { Content, headings } = await render(entry);
+
+const isPost = kind === 'post';
+const words = entry.body ? entry.body.split(/\s+/).length : 0;
+const readingMinutes = Math.max(1, Math.round(words / 200));
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+
+// post terkait: kategori sama, diurutkan berdasar jumlah tag yang beririsan
+const related = isPost
+  ? (all ?? [])
+      .filter((p) => p.id !== entry.id && p.data.categories.some((c) => entry.data.categories.includes(c)))
+      .map((p) => ({ p, score: p.data.tags.filter((t) => entry.data.tags.includes(t)).length }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map(({ p }) => p)
+  : [];
+
+const articleLd = isPost
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description,
+      image: heroImage ? new URL(heroImage, Astro.site).toString() : undefined,
+      datePublished: pubDate.toISOString(),
+      dateModified: (updatedDate ?? pubDate).toISOString(),
+      author: { '@type': 'Person', name: author },
+      publisher: { '@type': 'Organization', name: SITE.name, logo: { '@type': 'ImageObject', url: new URL(SITE.logoSquare, Astro.site).toString() } },
+      mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).toString(),
+    }
+  : null;
+const shareUrl = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<Base title={title} description={description} ogImage={heroImage} ogType={isPost ? 'article' : 'website'}>
+  <Fragment slot="head">
+    {articleLd && <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />}
+  </Fragment>
+
+  <article class="mx-auto max-w-6xl px-4 py-10">
+    <header class:list={['max-w-3xl', isPost ? '' : 'mb-8']}>
+      {
+        isPost && (
+          <p class="text-sm text-muted dark:text-muted-dark mb-3 flex flex-wrap gap-x-3 gap-y-1">
+            <FormattedDate date={pubDate} />
+            <span aria-hidden="true">&middot;</span>
+            <span>{readingMinutes} menit baca</span>
+            <span aria-hidden="true">&middot;</span>
+            <span>{author}</span>
+          </p>
+        )
+      }
+      <h1 class="font-display font-bold text-3xl sm:text-4xl leading-tight flex items-start">
+        <span class="brand-mark mt-2.5" aria-hidden="true"></span><span>{title}</span>
+      </h1>
+      {
+        isPost && entry.data.categories.length > 0 && (
+          <p class="mt-4 flex flex-wrap gap-2">
+            {entry.data.categories.map((c: string) => (
+              <a href={`/category/${c}/`} class="text-xs font-bold uppercase tracking-wide px-2 py-1 bg-paper-soft dark:bg-ink-soft border border-ink/15 dark:border-paper/15 rounded-sm hover:border-brand">
+                {SITE.categoryLabels[c] ?? c}
+              </a>
+            ))}
+          </p>
+        )
+      }
+    </header>
+
+    {
+      isPost && heroImage && (
+        <img src={heroImage} alt="" width="1024" height="576" class="mt-8 rounded-md w-full max-w-4xl aspect-video object-cover" fetchpriority="high" />
+      )
+    }
+
+    <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_240px]">
+      <div
+        class="prose prose-lg dark:prose-invert max-w-3xl prose-headings:font-display prose-headings:scroll-mt-24 prose-a:decoration-brand prose-a:decoration-2 prose-a:underline-offset-2 hover:prose-a:text-bark dark:hover:prose-a:text-brand prose-img:max-w-full"
+      >
+        <Content />
+      </div>
+
+      {
+        isPost && (
+          <aside class="order-first lg:order-none">
+            {toc.length >= 3 && (
+              <nav aria-label="Daftar isi" class="lg:sticky lg:top-6 border border-ink/15 dark:border-paper/15 rounded-md p-4 bg-paper-soft/60 dark:bg-ink-soft">
+                <h2 class="font-display font-bold mb-2 flex items-center text-sm uppercase tracking-wide">
+                  <span class="brand-mark" aria-hidden="true" />
+                  Daftar Isi
+                </h2>
+                <ol class="grid gap-1.5 text-sm">
+                  {toc.map((h) => (
+                    <li class:list={[h.depth === 3 && 'pl-4']}>
+                      <a href={`#${h.slug}`} class="text-muted dark:text-muted-dark hover:text-bark dark:hover:text-brand">
+                        {h.text}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )}
+          </aside>
+        )
+      }
+    </div>
+
+    {
+      isPost && (
+        <footer class="max-w-3xl mt-10 border-t border-ink/15 dark:border-paper/15 pt-6">
+          {entry.data.tags.length > 0 && (
+            <p class="flex flex-wrap gap-2 mb-6">
+              {entry.data.tags.map((t: string) => (
+                <a href={`/tag/${t}/`} class="text-sm px-2 py-0.5 text-muted dark:text-muted-dark hover:text-bark dark:hover:text-brand underline underline-offset-4 decoration-ink/25 dark:decoration-paper/25 hover:decoration-brand">
+                  #{t}
+                </a>
+              ))}
+            </p>
+          )}
+
+          <div class="flex flex-wrap items-center gap-3" data-share data-url={shareUrl} data-title={title}>
+            <span class="font-bold">Bagikan :</span>
+            <a href={`https://wa.me/?text=${encodeURIComponent(`${title} ${shareUrl}`)}`} class="underline underline-offset-4 hover:text-bark dark:hover:text-brand" rel="noopener">WhatsApp</a>
+            <a href={`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`} class="underline underline-offset-4 hover:text-bark dark:hover:text-brand" rel="noopener">Telegram</a>
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} class="underline underline-offset-4 hover:text-bark dark:hover:text-brand" rel="noopener">Facebook</a>
+            <button data-copy class="underline underline-offset-4 hover:text-bark dark:hover:text-brand cursor-pointer">Salin tautan</button>
+          </div>
+
+          <nav aria-label="Post sebelum & sesudah" class="mt-8 grid gap-4 sm:grid-cols-2">
+            {prev ? (
+              <a href={`/${prev.data.slug}/`} class="border border-ink/15 dark:border-paper/15 rounded-md p-4 hover:border-brand">
+                <span class="text-sm text-muted dark:text-muted-dark">&larr; Lebih lama</span>
+                <span class="block font-display font-bold mt-1">{prev.data.title}</span>
+              </a>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <a href={`/${next.data.slug}/`} class="border border-ink/15 dark:border-paper/15 rounded-md p-4 hover:border-brand sm:text-right">
+                <span class="text-sm text-muted dark:text-muted-dark">Lebih baru &rarr;</span>
+                <span class="block font-display font-bold mt-1">{next.data.title}</span>
+              </a>
+            )}
+          </nav>
+        </footer>
+      )
+    }
+
+    {
+      related.length > 0 && (
+        <section class="mt-14">
+          <h2 class="font-display font-bold text-2xl mb-6 flex items-center">
+            <span class="brand-mark" aria-hidden="true" />
+            Baca juga
+          </h2>
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <PostCard post={p} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </article>
+
+  <script>
+    document.querySelector<HTMLButtonElement>('[data-copy]')?.addEventListener('click', async (e) => {
+      const btn = e.currentTarget as HTMLButtonElement;
+      const url = btn.closest<HTMLElement>('[data-share]')!.dataset.url!;
+      try {
+        await navigator.clipboard.writeText(url);
+        btn.textContent = 'Tersalin!';
+        setTimeout(() => (btn.textContent = 'Salin tautan'), 2000);
+      } catch {
+        prompt('Salin tautan ini:', url);
+      }
+    });
+  </script>
+</Base>

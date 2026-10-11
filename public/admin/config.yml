@@ -1,0 +1,63 @@
+# Decap CMS - Paguyuban Linux Solo
+# Ganti USERNAME/REPO dengan repo GitHub Anda sebelum deploy.
+backend:
+  name: github
+  repo: USERNAME/REPO
+  branch: main
+  # GitHub Pages tidak punya server OAuth; isi base_url dengan OAuth proxy Anda
+  # (lihat README bagian "Setup OAuth Decap CMS"), contoh:
+  # base_url: https://decap-oauth.NAMA-ANDA.workers.dev
+
+# Testing lokal tanpa OAuth: jalankan `npx decap-server` lalu buka /admin/
+local_backend: true
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+locale: id
+
+collections:
+  - name: posts
+    label: Post
+    label_singular: Post
+    folder: src/content/posts
+    create: true
+    slug: '{{slug}}'
+    sortable_fields: [pubDate, title]
+    fields:
+      - { name: title, label: Judul, widget: string }
+      - { name: slug, label: Slug (URL), widget: string, hint: 'huruf-kecil-dengan-strip, menentukan alamat /slug/' }
+      - { name: pubDate, label: Tanggal terbit, widget: datetime }
+      - { name: updatedDate, label: Tanggal diperbarui, widget: datetime, required: false }
+      - { name: author, label: Penulis, widget: string, default: 'Paguyuban Linux Solo' }
+      - { name: description, label: Deskripsi singkat (SEO & kartu), widget: text, required: false }
+      - { name: heroImage, label: Gambar utama, widget: image, required: false }
+      - name: categories
+        label: Kategori
+        widget: select
+        multiple: true
+        options:
+          - { label: Artikel, value: artikel }
+          - { label: Event, value: event }
+          - { label: Dokumentasi, value: dokumentasi }
+        default: [artikel]
+      - { name: tags, label: Tag, widget: list, required: false, default: [] }
+      - { name: draft, label: Draft (jangan terbitkan), widget: boolean, default: false }
+      - { name: body, label: Isi tulisan, widget: markdown }
+
+  - name: pages
+    label: Halaman
+    label_singular: Halaman
+    folder: src/content/pages
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { name: title, label: Judul, widget: string }
+      - { name: slug, label: Slug (URL), widget: string }
+      - { name: pubDate, label: Tanggal dibuat, widget: datetime }
+      - { name: updatedDate, label: Tanggal diperbarui, widget: datetime, required: false }
+      - { name: author, label: Penulis, widget: string, default: 'Paguyuban Linux Solo' }
+      - { name: description, label: Deskripsi singkat (SEO), widget: text, required: false }
+      - { name: heroImage, label: Gambar utama, widget: image, required: false }
+      - { name: draft, label: Draft (jangan terbitkan), widget: boolean, default: false }
+      - { name: body, label: Isi halaman, widget: markdown }

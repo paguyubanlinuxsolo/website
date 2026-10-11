@@ -1,0 +1,217 @@
+---
+import '../styles/global.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/400-italic.css';
+import '@fontsource/roboto/700.css';
+import '@fontsource-variable/roboto-slab';
+import { SITE } from '../consts';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: string;
+}
+const { title, description = SITE.description, ogImage = SITE.logoSquare, ogType = 'website' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImageAbs = new URL(ogImage, Astro.site);
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: Astro.site?.toString(),
+  logo: new URL(SITE.logoSquare, Astro.site).toString(),
+  sameAs: [SITE.contact.telegram.url, SITE.contact.instagram.url, SITE.contact.github.url, SITE.contact.linkedin.url],
+};
+---
+
+<!doctype html>
+<html lang="id" class="scheme-light dark:scheme-dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title === SITE.name ? title : `${title} - ${SITE.name}`}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={SITE.logoSquare} type="image/png" />
+    <link rel="apple-touch-icon" href={SITE.logoSquare} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.name} href={new URL('rss.xml', Astro.site)} />
+    <meta name="generator" content={Astro.generator} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageAbs} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="id_ID" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbs} />
+    <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
+    <slot name="head" />
+    <script is:inline>
+      // set tema sebelum paint: localStorage > preferensi sistem
+      (() => {
+        const saved = localStorage.getItem('theme');
+        const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', dark);
+      })();
+    </script>
+  </head>
+  <body class="bg-paper text-body dark:bg-ink dark:text-body-dark font-sans antialiased min-h-dvh flex flex-col">
+    <a
+      href="#konten"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:bg-brand focus:text-ink focus:px-4 focus:py-2 focus:font-bold"
+      >Langsung ke konten</a
+    >
+
+    <header class="bg-ink text-paper">
+      <div class="mx-auto max-w-6xl px-4 flex items-center justify-between gap-4 py-3">
+        <a href="/" class="flex items-center gap-3 shrink-0" aria-label="Beranda Paguyuban Linux Solo">
+          <img src={SITE.logoSquare} alt="" width="44" height="44" class="h-11 w-11" />
+          <span class="font-display font-bold leading-tight text-paper">
+            Paguyuban<br />
+            <span class="text-brand">Linux Solo</span>
+          </span>
+        </a>
+
+        <nav aria-label="Menu utama" class="hidden lg:block">
+          <ul class="flex items-center gap-1">
+            {
+              SITE.nav.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
+                    class:list={[
+                      'px-3 py-2 rounded-sm hover:text-brand transition-colors',
+                      Astro.url.pathname === item.href
+                        ? 'text-brand underline decoration-2 underline-offset-8'
+                        : 'text-paper',
+                    ]}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <div class="flex items-center gap-1">
+          <a href="/cari/" class="p-3 rounded-sm hover:text-brand" aria-label="Cari artikel">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-3.8-3.8"></path>
+            </svg>
+          </a>
+          <button id="theme-toggle" class="p-3 rounded-sm hover:text-brand" aria-label="Ganti tema terang/gelap">
+            <svg class="hidden dark:block" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.5"></circle>
+              <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"></path>
+            </svg>
+            <svg class="dark:hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10Z"></path>
+            </svg>
+          </button>
+          <button
+            id="menu-toggle"
+            class="p-3 rounded-sm hover:text-brand lg:hidden"
+            aria-label="Buka menu"
+            aria-expanded="false"
+            aria-controls="menu-mobile"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <path d="M3 6h18M3 12h18M3 18h18"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <nav id="menu-mobile" aria-label="Menu utama (mobile)" class="hidden lg:hidden border-t border-paper/15" hidden>
+        <ul class="mx-auto max-w-6xl px-4 py-3 grid gap-1">
+          {
+            SITE.nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
+                  class:list={[
+                    'block px-3 py-2.5 rounded-sm hover:text-brand',
+                    Astro.url.pathname === item.href ? 'text-brand font-bold' : 'text-paper',
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </header>
+
+    <main id="konten" class="flex-1" data-pagefind-body>
+      <slot />
+    </main>
+
+    <footer class="bg-ink text-paper mt-16">
+      <div class="mx-auto max-w-6xl px-4 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div>
+          <img src={SITE.logoLandscape} alt="Paguyuban Linux Solo" width="200" height="60" class="h-12 w-auto mb-4" loading="lazy" />
+          <p class="text-muted-dark max-w-prose">{SITE.description}</p>
+        </div>
+        <div>
+          <h2 class="font-display font-bold text-lg mb-3 flex items-center"><span class="brand-mark"></span>Jelajah</h2>
+          <ul class="grid gap-1.5">
+            {
+              SITE.nav
+                .filter((i) => i.href !== '/')
+                .map((item) => (
+                  <li>
+                    <a href={item.href} class="text-muted-dark hover:text-brand">
+                      {item.label}
+                    </a>
+                  </li>
+                ))
+            }
+            <li><a href="/rss.xml" class="text-muted-dark hover:text-brand">RSS Feed</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="font-display font-bold text-lg mb-3 flex items-center"><span class="brand-mark"></span>Kontak</h2>
+          <ul class="grid gap-1.5">
+            <li>WhatsApp : <a href={SITE.contact.whatsapp.url} class="text-muted-dark hover:text-brand">{SITE.contact.whatsapp.label}</a></li>
+            <li>Telegram : <a href={SITE.contact.telegram.url} class="text-muted-dark hover:text-brand">{SITE.contact.telegram.label}</a></li>
+            <li>Instagram : <a href={SITE.contact.instagram.url} class="text-muted-dark hover:text-brand">{SITE.contact.instagram.label}</a></li>
+            <li>GitHub : <a href={SITE.contact.github.url} class="text-muted-dark hover:text-brand">{SITE.contact.github.label}</a></li>
+            <li>LinkedIn : <a href={SITE.contact.linkedin.url} class="text-muted-dark hover:text-brand">{SITE.contact.linkedin.label}</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-paper/15">
+        <p class="mx-auto max-w-6xl px-4 py-5 text-sm text-muted-dark">
+          © {new Date().getFullYear()} Paguyuban Linux Solo. Dibangun dengan perangkat lunak bebas & sumber terbuka.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const menuBtn = document.getElementById('menu-toggle')!;
+      const menu = document.getElementById('menu-mobile')!;
+      menuBtn.addEventListener('click', () => {
+        const open = menu.hidden;
+        menu.hidden = !open;
+        menu.classList.toggle('hidden', !open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menuBtn.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
+      });
+
+      document.getElementById('theme-toggle')!.addEventListener('click', () => {
+        const dark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { SITE } from '../consts';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  /* kartu pertama di daftar boleh tampil besar (hierarki, bukan dekorasi) */
+  featured?: boolean;
+}
+const { post, featured = false } = Astro.props;
+const { title, description, heroImage, pubDate, categories } = post.data;
+---
+
+<article
+  class:list={[
+    'group border border-ink/15 dark:border-paper/15 rounded-md overflow-hidden bg-paper dark:bg-ink-soft',
+    featured && 'sm:grid sm:grid-cols-2',
+  ]}
+>
+  {
+    heroImage && (
+      <a href={`/${post.data.slug}/`} tabindex="-1" aria-hidden="true" class:list={[featured || 'block']}>
+        <img
+          src={heroImage}
+          alt=""
+          width="640"
+          height="360"
+          loading="lazy"
+          class="w-full h-48 sm:h-full object-cover aspect-video sm:aspect-auto"
+        />
+      </a>
+    )
+  }
+  <div class="p-5 flex flex-col gap-2">
+    <p class="text-sm text-muted dark:text-muted-dark flex flex-wrap items-center gap-x-2">
+      <FormattedDate date={pubDate} />
+      {
+        categories.map((c) => (
+          <a href={`/category/${c}/`} class="font-bold uppercase tracking-wide text-xs hover:text-bark dark:hover:text-brand underline-offset-4 hover:underline">
+            {SITE.categoryLabels[c] ?? c}
+          </a>
+        ))
+      }
+    </p>
+    <h3 class:list={['font-display font-bold leading-snug', featured ? 'text-2xl' : 'text-lg']}>
+      <a href={`/${post.data.slug}/`} class="group-hover:text-bark dark:group-hover:text-brand">
+        {title}
+      </a>
+    </h3>
+    {description && <p class="text-muted dark:text-muted-dark line-clamp-3">{description}</p>}
+  </div>
+</article>
