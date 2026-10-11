@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Album dari dokumentasi asli di media library situs lama (nama event dari
+// caption/alt WordPress dan judul post liputannya).
+const U = '/images/uploads';
+const albums = [
+  {
+    title: 'Pengenalan FLOSS di FOSTISIDA, FOSTI UMS',
+    date: 'November 2023',
+    link: '/paguyuban-linux-solo-memberikan-materi-pengenalan-floss-di-acara-fostisida-fosti-ums/',
+    photos: [
+      `${U}/2023/11/photo_2023-11-29-14.21.16.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.21.03.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.21.07.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.21.10.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.21.13.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.21.26.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.21.36.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.21.44.jpeg`,
+    ],
+  },
+  {
+    title: 'Meetup di Sedarah Kopi, Mojosongo',
+    date: 'November 2023',
+    link: '/meetup-paguyuban-linux-solo-di-sedarah-kopi-mojosongo/',
+    photos: [
+      `${U}/2023/11/photo_2023-11-29-14.28.33-e1703432174976.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.28.44.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.28.59.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.29.13.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.29.17.jpeg`,
+      `${U}/2023/11/photo_2023-11-29-14.29.26.jpeg`,
+    ],
+  },
+  {
+    title: 'Meetup di Mojola Cafe',
+    date: 'Desember 2023',
+    link: '/meetup-pls-di-mojola-cafe/',
+    photos: [
+      `${U}/2023/12/photo_2023-12-24-14.21.42.jpeg`,
+      `${U}/2023/12/photo_2023-12-24-14.21.52.jpeg`,
+      `${U}/2023/12/photo_2023-12-24-14.22.24.jpeg`,
+      `${U}/2023/12/photo_2023-12-24-14.22.36.jpeg`,
+      `${U}/2023/12/photo_2023-12-24-14.22.46.jpeg`,
+      `${U}/2023/12/photo_2023-12-24-14.22.57.jpeg`,
+      `${U}/2023/12/photo_2023-12-24-14.23.40.jpeg`,
+      `${U}/2023/12/photo_2023-12-24-14.24.03.jpeg`,
+    ],
+  },
+  {
+    title: 'Sharing Session bersama openSUSE ID x Gimpscape ID',
+    date: '2023',
+    link: '/suasana-kegiatan-sharing-session-bersama-opensuse-id-x-gimpscape-id/',
+    photos: [
+      `${U}/2023/12/so1.jpg`,
+      `${U}/2023/12/so2.jpg`,
+      `${U}/2023/12/so3.jpg`,
+      `${U}/2023/12/so4.jpg`,
+      `${U}/2023/12/so6.jpg`,
+      `${U}/2023/12/so7.jpg`,
+    ],
+  },
+  {
+    title: 'LOUCA23 & Penerjemahan LibreOffice',
+    date: '2023',
+    photos: [
+      `${U}/2023/10/NC_07500-Enhanced-NR-scaled.jpg`,
+      `${U}/2023/11/image2009.png`,
+      `${U}/2023/10/IMG_20190126_150952.jpg`,
+    ],
+  },
+  {
+    title: 'Kopdar 2019 - 2020',
+    date: '2019 - 2020',
+    photos: [
+      `${U}/2019/11/DSC_0980-_1_-scaled.webp`,
+      `${U}/2019/12/photo_2019-12-14_12-13-27.jpg`,
+      `${U}/2020/01/photo_2020-01-18_11-53-09-e1703690310601.jpg`,
+      `${U}/2023/10/photo_2020-02-22_12-06-56.jpg`,
+    ],
+  },
+];
+---
+
+<Base title="Galeri" description="Dokumentasi foto kegiatan Paguyuban Linux Solo : meetup, community gathering, workshop, dan kolaborasi.">
+  <div class="mx-auto max-w-6xl px-4 py-10">
+    <h1 class="font-display font-bold text-3xl sm:text-4xl flex items-center">
+      <span class="brand-mark" aria-hidden="true"></span>Galeri
+    </h1>
+    <p class="mt-3 text-muted dark:text-muted-dark max-w-2xl">
+      Dokumentasi kegiatan komunitas dari masa ke masa. Klik foto untuk melihat ukuran penuh.
+    </p>
+
+    {
+      albums.map((album) => (
+        <section class="mt-12">
+          <div class="flex flex-wrap items-baseline gap-x-3 mb-4">
+            <h2 class="font-display font-bold text-2xl flex items-center">
+              <span class="brand-mark" aria-hidden="true" />
+              {album.title}
+            </h2>
+            <span class="text-muted dark:text-muted-dark text-sm">{album.date}</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {album.photos.map((src, i) => (
+              <a href={src} class="block rounded-md overflow-hidden group">
+                <img
+                  src={src}
+                  alt={`Foto ${i + 1} - ${album.title}`}
+                  width="480"
+                  height="360"
+                  loading="lazy"
+                  class="w-full aspect-[4/3] object-cover group-hover:opacity-85 transition-opacity"
+                />
+              </a>
+            ))}
+          </div>
+          {album.link && (
+            <p class="mt-3">
+              <a href={album.link} class="underline decoration-brand decoration-2 underline-offset-4 hover:text-bark dark:hover:text-brand">
+                Baca liputannya
+              </a>
+            </p>
+          )}
+        </section>
+      ))
+    }
+  </div>
+</Base>

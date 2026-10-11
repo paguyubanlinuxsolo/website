@@ -81,19 +81,42 @@ const orgLd = {
           <ul class="flex items-center gap-1">
             {
               SITE.nav.map((item) => (
-                <li>
+                <li class="relative group">
                   <a
                     href={item.href}
                     aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
                     class:list={[
-                      'px-3 py-2 rounded-sm hover:text-brand transition-colors',
+                      'flex items-center gap-1 px-3 py-2 rounded-sm hover:text-brand transition-colors',
                       Astro.url.pathname === item.href
                         ? 'text-brand underline decoration-2 underline-offset-8'
                         : 'text-paper',
                     ]}
                   >
                     {item.label}
+                    {item.children && (
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
+                    )}
                   </a>
+                  {item.children && (
+                    <ul class="absolute left-0 top-full z-20 min-w-48 hidden group-hover:block group-focus-within:block bg-ink border border-paper/20 rounded-md py-1 shadow-lg">
+                      {item.children.map((c) => (
+                        <li>
+                          <a
+                            href={c.href}
+                            aria-current={Astro.url.pathname === c.href ? 'page' : undefined}
+                            class:list={[
+                              'block px-4 py-2.5 hover:text-brand whitespace-nowrap',
+                              Astro.url.pathname === c.href ? 'text-brand font-bold' : 'text-paper',
+                            ]}
+                          >
+                            {c.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))
             }
@@ -133,20 +156,27 @@ const orgLd = {
       <nav id="menu-mobile" aria-label="Menu utama (mobile)" class="hidden lg:hidden border-t border-paper/15" hidden>
         <ul class="mx-auto max-w-6xl px-4 py-3 grid gap-1">
           {
-            SITE.nav.map((item) => (
-              <li>
-                <a
-                  href={item.href}
-                  aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
-                  class:list={[
-                    'block px-3 py-2.5 rounded-sm hover:text-brand',
-                    Astro.url.pathname === item.href ? 'text-brand font-bold' : 'text-paper',
-                  ]}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))
+            SITE.nav
+              .flatMap((item) =>
+                item.children
+                  ? [{ ...item, sub: false }, ...item.children.filter((c) => c.href !== item.href).map((c) => ({ ...c, sub: true }))]
+                  : [{ ...item, sub: false }]
+              )
+              .map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
+                    class:list={[
+                      'block px-3 py-2.5 rounded-sm hover:text-brand',
+                      item.sub && 'pl-7',
+                      Astro.url.pathname === item.href ? 'text-brand font-bold' : 'text-paper',
+                    ]}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
           }
         </ul>
       </nav>
@@ -167,6 +197,7 @@ const orgLd = {
           <ul class="grid gap-1.5">
             {
               SITE.nav
+                .flatMap((item) => (item.children ? item.children : [item]))
                 .filter((i) => i.href !== '/')
                 .map((item) => (
                   <li>

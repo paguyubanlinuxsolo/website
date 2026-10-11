@@ -110,7 +110,11 @@ function convert(item, kind, outDir) {
 for (const p of posts) convert(p, 'post', path.join(ROOT, 'src/content/posts'));
 console.log(`posts: ${posts.length}`);
 
-const SKIP_PAGES = { 'sample-page': 'Beranda: layout Elementor, dibangun ulang sebagai src/pages/index.astro' };
+const SKIP_PAGES = {
+  'sample-page': 'Beranda: layout Elementor, dibangun ulang sebagai src/pages/index.astro',
+  galeri: 'Galeri: widget post Elementor, dibangun ulang sebagai src/pages/galeri.astro',
+  kontak: 'Kontak: kosong di WP, dibangun ulang sebagai src/pages/kontak.astro',
+};
 let pageCount = 0;
 for (const p of pages) {
   if (SKIP_PAGES[p.slug]) { issues.push(`Halaman '${p.slug}' dilewati: ${SKIP_PAGES[p.slug]}`); continue; }

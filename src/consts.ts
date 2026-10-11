@@ -13,13 +13,19 @@ export const SITE = {
   },
   nav: [
     { label: 'Beranda', href: '/' },
-    { label: 'Tentang', href: '/tentang/' },
-    { label: 'Sejarah', href: '/sejarah/' },
-    { label: 'Pengurus', href: '/pengurus/' },
+    {
+      label: 'Tentang',
+      href: '/tentang/',
+      children: [
+        { label: 'Tentang Kami', href: '/tentang/' },
+        { label: "Sebuah 'Sorotan'", href: '/sejarah/' },
+        { label: 'Pengurus', href: '/pengurus/' },
+      ],
+    },
     { label: 'Blog', href: '/blog/' },
     { label: 'Kegiatan', href: '/kegiatan/' },
     { label: 'Galeri', href: '/galeri/' },
     { label: 'Kontak', href: '/kontak/' },
-  ],
+  ] as { label: string; href: string; children?: { label: string; href: string }[] }[],
   categoryLabels: { artikel: 'Artikel', event: 'Event', dokumentasi: 'Dokumentasi' } as Record<string, string>,
 };
