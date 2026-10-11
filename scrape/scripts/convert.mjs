@@ -114,6 +114,7 @@ const SKIP_PAGES = {
   'sample-page': 'Beranda: layout Elementor, dibangun ulang sebagai src/pages/index.astro',
   galeri: 'Galeri: widget post Elementor, dibangun ulang sebagai src/pages/galeri.astro',
   kontak: 'Kontak: kosong di WP, dibangun ulang sebagai src/pages/kontak.astro',
+  pengurus: 'Pengurus: dibangun ulang sebagai grid kartu di src/pages/pengurus.astro',
 };
 let pageCount = 0;
 for (const p of pages) {

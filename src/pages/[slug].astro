@@ -10,7 +10,7 @@ export async function getStaticPaths() {
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
   // halaman kontak dibangun khusus di /kontak (src/pages/kontak.astro)
-  const pages = await getCollection('pages', ({ data }) => !data.draft && !['kontak', 'galeri'].includes(data.slug));
+  const pages = await getCollection('pages', ({ data }) => !data.draft && !['kontak', 'galeri', 'pengurus'].includes(data.slug));
   return [
     ...posts.map((entry, i) => ({
       params: { slug: entry.data.slug },
