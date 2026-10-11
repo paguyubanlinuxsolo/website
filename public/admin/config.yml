@@ -2,7 +2,7 @@
 # Ganti USERNAME/REPO dengan repo GitHub Anda sebelum deploy.
 backend:
   name: github
-  repo: USERNAME/REPO
+  repo: paguyubanlinuxsolo/website
   branch: main
   # GitHub Pages tidak punya server OAuth; isi base_url dengan OAuth proxy Anda
   # (lihat README bagian "Setup OAuth Decap CMS"), contoh:
