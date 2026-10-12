@@ -3,7 +3,7 @@ title: "Kegiatan"
 slug: "kegiatan"
 pubDate: 2023-10-24T09:25:52Z
 updatedDate: 2025-08-20T05:59:56Z
-author: "admin"
+author: "Paguyuban Linux Solo"
 description: "2025 2024 2023 2022 2021 2020 2019 2018"
 draft: false
 ---

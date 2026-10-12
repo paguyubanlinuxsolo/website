@@ -3,7 +3,7 @@ title: "Sebuah ‘Sorotan’"
 slug: "sejarah"
 pubDate: 2023-10-24T09:25:53Z
 updatedDate: 2023-12-29T07:02:17Z
-author: "admin"
+author: "Paguyuban Linux Solo"
 description: "Paguyuban Linux Solo merupakan komunitas informasi teknologi di Solo, yang memiliki fokus dan bergerak pada pemerhati, pengguna, dan pengembang GNU/Linux dan Free Libre Open Source Software (FLOSS), tidak hanya membahas tentang GNU/Linux saja melainkan kita terbuka untuk berkolaborasi di dunia informasi teknologi dengan trend terkini. Alasan utama mengapa komunitas ini berdiri adalah ingin mewujudkan kegiatan-kegiatan"
 draft: false
 ---

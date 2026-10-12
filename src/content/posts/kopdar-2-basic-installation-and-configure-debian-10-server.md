@@ -3,7 +3,7 @@ title: "Kopdar #2 : Basic Installation and Configure Debian 10 Server"
 slug: "kopdar-2-basic-installation-and-configure-debian-10-server"
 pubDate: 2019-12-15T02:46:00Z
 updatedDate: 2023-12-27T15:14:22Z
-author: "admin"
+author: "Paguyuban Linux Solo"
 description: "Halo !Pecinta Linux se-Solo Raya, pripun kabare sedoyo ? 😁Alhamdulillah sehat sedoyo nggih… Paguyuban Linux Solo mau ngadain kopdar kedua nih. Dikopdar kedua ini kita akan mendatangkan pembicara dari anggota paguyuban linux solo yang bertajukKopdar #2 “Basic Installation and Configure Debian 10 Server”, kopdar ini sebenernya lebih ‘khususon’ kepada para pemula atau khalayak awam yg"
 heroImage: "/images/uploads/2019/12/photo_2019-12-14_12-13-27.jpg"
 categories: ["event"]

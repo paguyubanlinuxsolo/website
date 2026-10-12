@@ -27,4 +27,16 @@ const pages = defineCollection({
   schema: z.object(common),
 });
 
-export const collections = { posts, pages };
+const authors = defineCollection({
+  loader: glob({ base: './src/content/authors', pattern: '**/*.md' }),
+  schema: z.object({
+    name: z.string(),
+    photo: z.string().optional(),
+    bio: z.string().default(''),
+    github: z.string().optional(),
+    telegram: z.string().optional(),
+    website: z.string().optional(),
+  }),
+});
+
+export const collections = { posts, pages, authors };

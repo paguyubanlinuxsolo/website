@@ -3,7 +3,7 @@ title: "Pengenalan FLOSS di Acara FOSTI UMS"
 slug: "paguyuban-linux-solo-memberikan-materi-pengenalan-floss-di-acara-fostisida-fosti-ums"
 pubDate: 2023-11-18T07:15:26Z
 updatedDate: 2023-12-24T15:11:49Z
-author: "admin"
+author: "Paguyuban Linux Solo"
 description: "Pada Sabtu, 18 November 2023 FOSTI UMS mengadakan kegiatan FOSTISIDA di Universitas Muhammadiyah Surakarta. FOSTISIDA sendiri merupakan salah satu kegiatan rutin FOSTI UMS yang bertujuan untuk mempererat hubungan antar pengurus FOSTI melalui kegiatan-kegiatan seru, salah satunya seminar seputar open source. Dalam acara tersebut Ketua Paguyuban Linux Solo, Mas Andreas Abi Permana mendapatkan undangan sebagai pemateri."
 heroImage: "/images/uploads/2023/11/photo_2023-11-29-14.21.16.jpeg"
 categories: ["dokumentasi"]

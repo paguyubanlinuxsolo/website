@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { url } from '../consts';
+
+interface Props {
+  author: CollectionEntry<'authors'>;
+  /* heading = dipakai sebagai kop halaman arsip penulis (tanpa link "tulisan lainnya") */
+  heading?: boolean;
+}
+const { author, heading = false } = Astro.props;
+const { name, photo, bio, github, telegram, website } = author.data;
+const links = [
+  github && { label: 'GitHub', href: `https://github.com/${github}` },
+  telegram && { label: 'Telegram', href: `https://t.me/${telegram}` },
+  website && { label: 'Website', href: website },
+].filter(Boolean) as { label: string; href: string }[];
+---
+
+<div class="flex items-start gap-4">
+  {
+    photo ? (
+      <img src={url(photo)} alt="" width="112" height="112" loading="lazy" class="w-16 h-16 sm:w-20 sm:h-20 aspect-square object-cover rounded-md border-b-4 border-brand shrink-0" />
+    ) : (
+      <span aria-hidden="true" class="w-16 h-16 sm:w-20 sm:h-20 grid place-items-center bg-brand text-ink font-display font-bold text-3xl rounded-md shrink-0">
+        {name.charAt(0)}
+      </span>
+    )
+  }
+  <div>
+    <p class="text-xs font-bold uppercase tracking-wide text-muted dark:text-muted-dark">Ditulis oleh</p>
+    {
+      heading ? (
+        <h1 class="font-display font-bold text-2xl sm:text-3xl mt-0.5">{name}</h1>
+      ) : (
+        <p class="font-display font-bold text-xl mt-0.5">
+          <a href={url(`/penulis/${author.id}/`)} class="hover:text-bark dark:hover:text-brand">
+            {name}
+          </a>
+        </p>
+      )
+    }
+    {bio && <p class="mt-1 text-muted dark:text-muted-dark max-w-prose">{bio}</p>}
+    {
+      (links.length > 0 || !heading) && (
+        <p class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+          {links.map((l) => (
+            <a href={l.href} rel="noopener" class="underline decoration-brand decoration-2 underline-offset-4 hover:text-bark dark:hover:text-brand">
+              {l.label}
+            </a>
+          ))}
+          {!heading && (
+            <a href={url(`/penulis/${author.id}/`)} class="underline decoration-brand decoration-2 underline-offset-4 hover:text-bark dark:hover:text-brand">
+              Semua tulisannya
+            </a>
+          )}
+        </p>
+      )
+    }
+  </div>
+</div>

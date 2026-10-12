@@ -3,7 +3,7 @@ title: "Suasana kegiatan Sharing Session Bersama openSUSE ID x Gimpscape ID"
 slug: "suasana-kegiatan-sharing-session-bersama-opensuse-id-x-gimpscape-id"
 pubDate: 2020-03-14T19:58:00Z
 updatedDate: 2025-08-20T05:45:02Z
-author: "admin"
+author: "Paguyuban Linux Solo"
 description: "Halo sobat linux…balik lagi sama aku (Arif), gmana kabarnya? semoga baik-baik saja ya hihi, oiya disini saya hanya mencoba merangkum apa yang saya peroleh ketika saya mengikuti acara Sharing Session openSUSE ID dan Gimpscape ID yang bertajuk “FOSS & Creative Commons Dalam Dunia Pendidikan & Pekerjaan” Jadi pertama yang dibahas pada sharing session ini adalah"
 heroImage: "/images/uploads/2023/12/so1.jpg"
 categories: ["event"]

@@ -31,7 +31,14 @@ collections:
       - { name: slug, label: Slug (URL), widget: string, hint: 'huruf-kecil-dengan-strip, menentukan alamat /slug/' }
       - { name: pubDate, label: Tanggal terbit, widget: datetime }
       - { name: updatedDate, label: Tanggal diperbarui, widget: datetime, required: false }
-      - { name: author, label: Penulis, widget: string, default: 'Paguyuban Linux Solo' }
+      - name: author
+        label: Penulis
+        widget: relation
+        collection: authors
+        value_field: name
+        search_fields: [name]
+        display_fields: [name]
+        default: 'Paguyuban Linux Solo'
       - { name: description, label: Deskripsi singkat (SEO & kartu), widget: text, required: false }
       - { name: heroImage, label: Gambar utama, widget: image, required: false }
       - name: categories
@@ -63,3 +70,19 @@ collections:
       - { name: heroImage, label: Gambar utama, widget: image, required: false }
       - { name: draft, label: Draft (jangan terbitkan), widget: boolean, default: false }
       - { name: body, label: Isi halaman, widget: markdown }
+
+  - name: authors
+    label: Penulis
+    label_singular: Penulis
+    folder: src/content/authors
+    create: true
+    slug: '{{slug}}'
+    identifier_field: name
+    fields:
+      - { name: name, label: Nama, widget: string }
+      - { name: photo, label: Foto, widget: image, required: false }
+      - { name: bio, label: Bio singkat, widget: text, required: false }
+      - { name: github, label: Username GitHub, widget: string, required: false }
+      - { name: telegram, label: Username Telegram, widget: string, required: false }
+      - { name: website, label: Website, widget: string, required: false }
+      - { name: body, label: ' ', widget: hidden, default: '' }

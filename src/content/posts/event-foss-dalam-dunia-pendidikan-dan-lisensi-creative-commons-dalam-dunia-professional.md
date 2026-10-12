@@ -3,7 +3,7 @@ title: "[Event] FOSS dalam dunia pendidikan dan Lisensi Creative Commons dalam d
 slug: "event-foss-dalam-dunia-pendidikan-dan-lisensi-creative-commons-dalam-dunia-professional"
 pubDate: 2020-03-07T08:31:00Z
 updatedDate: 2023-12-27T15:08:21Z
-author: "admin"
+author: "Paguyuban Linux Solo"
 description: "Kali ini openSUSE ID dan GimpScape ID ingin mengadakan sebuah Sharing Session nih. Temanya : FOSS dalam dunia pendidikan dan Lisensi Creative Commons dalam dunia professional Kamu pake FOSS di kampus/sekolah tapi gak pede? Kalo pake FOSS ada manfaatnya gak si ? Kamu sering nyomot gambar di Google tanpa tau lisensi? Pengen kerja jadi desainer"
 heroImage: "/images/uploads/2023/12/so1.jpg"
 categories: ["event"]

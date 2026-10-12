@@ -3,7 +3,7 @@ title: "Meetup Paguyuban Linux Solo di Sedarah Kopi Mojosongo November 2023"
 slug: "meetup-paguyuban-linux-solo-di-sedarah-kopi-mojosongo"
 pubDate: 2023-11-17T07:02:18Z
 updatedDate: 2023-12-24T15:25:16Z
-author: "admin"
+author: "Paguyuban Linux Solo"
 description: "Informasi Umum: Halo dulur Linux Solo! Hari Jum’at yang lalu Paguyuban Linux Surakarta kembali mengadakan meet up. Venue kemarin ada di Sedarah Kopi yang bertempat di Mojosongo, Solo. Sedarah Kopi hadir dengan penataan yang apik dan minimalis, dilengkapi dengan aksesoris dan alat pendukung seperti mic & sound sehingga menambah keseruan meet up kemarin. Peserta meet"
 heroImage: "/images/uploads/2023/11/photo_2023-11-29-14.28.33-e1703432174976.jpeg"
 categories: ["event"]
