@@ -36,11 +36,12 @@ export default {
 
       const html = `<!doctype html><html><body><p>Menyelesaikan login…</p><script>
   (function () {
-    function receiveMessage(e) {
+    // balas HANYA ack handshake dari Decap; abaikan pesan lain (mis. dari ekstensi browser)
+    window.addEventListener('message', function (e) {
+      if (e.data !== 'authorizing:github') return;
       window.opener.postMessage(${JSON.stringify(payload)}, e.origin);
       window.close();
-    }
-    window.addEventListener('message', receiveMessage, { once: true });
+    });
     window.opener.postMessage('authorizing:github', '*');
   })();
 </script></body></html>`;
