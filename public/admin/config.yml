@@ -1,12 +1,10 @@
 # Decap CMS - Paguyuban Linux Solo
-# Ganti USERNAME/REPO dengan repo GitHub Anda sebelum deploy.
 backend:
   name: github
   repo: paguyubanlinuxsolo/website
   branch: main
-  # GitHub Pages tidak punya server OAuth; isi base_url dengan OAuth proxy Anda
-  # (lihat README bagian "Setup OAuth Decap CMS"), contoh:
-  # base_url: https://decap-oauth.NAMA-ANDA.workers.dev
+  # OAuth proxy (Cloudflare Worker, kode di oauth-worker/)
+  base_url: https://linuxsolo-decap-oauth.andreasabipermana.workers.dev
 
 # Testing lokal tanpa OAuth: jalankan `npx decap-server` lalu buka /admin/
 local_backend: true
