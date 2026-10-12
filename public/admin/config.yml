@@ -9,6 +9,10 @@ backend:
 # Testing lokal tanpa OAuth: jalankan `npx decap-server` lalu buka /admin/
 local_backend: true
 
+# Editorial workflow: tulisan baru masuk sebagai draft (PR di GitHub) dengan
+# tahapan Drafts -> In Review -> Ready, baru Publish. Tab "Workflow" muncul di CMS.
+publish_mode: editorial_workflow
+
 media_folder: public/images/uploads
 public_folder: /images/uploads
 
