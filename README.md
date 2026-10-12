@@ -51,6 +51,12 @@ sementara `local_backend:` menjadi `url: http://localhost:8091/api/v1`.
 
 #### Setup OAuth Decap CMS (Cloudflare Worker)
 
+> **Status: SUDAH TERPASANG.** Worker `linuxsolo-decap-oauth` (kode di `oauth-worker/`)
+> live di `https://linuxsolo-decap-oauth.andreasabipermana.workers.dev`, `base_url` di
+> `public/admin/config.yml` sudah menunjuk ke sana, dan login GitHub di `/admin/` berfungsi.
+> Langkah di bawah hanya diperlukan bila membuat ulang dari nol.
+> Update worker: `cd oauth-worker && npx wrangler deploy` (secret tersimpan di Cloudflare, tidak ikut repo).
+
 1. Buat GitHub OAuth App: GitHub → Settings → Developer settings → OAuth Apps → New.
    - Homepage URL: `https://linuxsolo.or.id`
    - Authorization callback URL: `https://<nama-worker>.<akun>.workers.dev/callback`
