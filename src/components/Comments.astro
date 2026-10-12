@@ -1,0 +1,49 @@
+---
+/* Komentar via giscus (GitHub Discussions repo paguyubanlinuxsolo/website).
+   Tema mengikuti toggle terang/gelap situs. */
+---
+
+<section class="max-w-3xl mt-14" aria-label="Komentar">
+  <h2 class="font-display font-bold text-2xl mb-6 flex items-center">
+    <span class="brand-mark" aria-hidden="true"></span>Komentar
+  </h2>
+  <p class="text-muted dark:text-muted-dark mb-4 text-sm">
+    Berkomentar memakai akun GitHub. Komentar tersimpan sebagai
+    <a
+      href="https://github.com/paguyubanlinuxsolo/website/discussions"
+      rel="noopener"
+      class="underline decoration-brand decoration-2 underline-offset-4 hover:text-bark dark:hover:text-brand">GitHub Discussions</a
+    > komunitas.
+  </p>
+  <div id="giscus-wrap"></div>
+</section>
+
+<script>
+  const theme = () => (document.documentElement.classList.contains('dark') ? 'dark_dimmed' : 'light');
+
+  const s = document.createElement('script');
+  s.src = 'https://giscus.app/client.js';
+  Object.entries({
+    'data-repo': 'paguyubanlinuxsolo/website',
+    'data-repo-id': 'R_kgDOVE2XXg',
+    'data-category': 'Announcements',
+    'data-category-id': 'DIC_kwDOVE2XXs4DH7U1',
+    'data-mapping': 'pathname',
+    'data-strict': '0',
+    'data-reactions-enabled': '1',
+    'data-emit-metadata': '0',
+    'data-input-position': 'bottom',
+    'data-theme': theme(),
+    'data-lang': 'id',
+    'data-loading': 'lazy',
+    crossorigin: 'anonymous',
+  }).forEach(([k, v]) => s.setAttribute(k, v));
+  s.async = true;
+  document.getElementById('giscus-wrap')!.appendChild(s);
+
+  // ikuti toggle tema situs
+  new MutationObserver(() => {
+    const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+    iframe?.contentWindow?.postMessage({ giscus: { setConfig: { theme: theme() } } }, 'https://giscus.app');
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+</script>
