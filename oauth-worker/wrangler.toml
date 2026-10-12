@@ -1,0 +1,7 @@
+name = "linuxsolo-decap-oauth"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Secrets (diisi via `npx wrangler secret put`, JANGAN ditulis di sini):
+#   GITHUB_CLIENT_ID
+#   GITHUB_CLIENT_SECRET

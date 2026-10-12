@@ -9,8 +9,8 @@ import sitemap from '@astrojs/sitemap';
 // Nanti saat DNS linuxsolo.or.id sudah diarahkan ke GitHub Pages:
 //   SITE_URL = 'https://linuxsolo.or.id'; BASE = '/';
 // (file public/CNAME sudah disiapkan; isi juga Custom domain di Settings -> Pages)
-const SITE_URL = 'https://paguyubanlinuxsolo.github.io';
-const BASE = '/website';
+const SITE_URL = 'https://linuxsolo.or.id';
+const BASE = '/';
 
 // prefix semua src/href absolut di konten markdown dengan BASE
 function rehypeBase() {
