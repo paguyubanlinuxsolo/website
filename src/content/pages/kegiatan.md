@@ -4,7 +4,7 @@ slug: "kegiatan"
 pubDate: 2023-10-24T09:25:52Z
 updatedDate: 2025-08-20T05:59:56Z
 author: "Paguyuban Linux Solo"
-description: "2025 2024 2023 2022 2021 2020 2019 2018"
+description: "Agenda dan riwayat kegiatan Paguyuban Linux Solo dari 2018 sampai sekarang : meetup rutin, community gathering, webinar, dan kolaborasi workshop di Solo Raya."
 draft: false
 ---
 ## 2025

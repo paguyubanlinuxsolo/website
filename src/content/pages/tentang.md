@@ -4,7 +4,7 @@ slug: "tentang"
 pubDate: 2023-10-24T09:25:53Z
 updatedDate: 2025-08-20T06:14:43Z
 author: "Paguyuban Linux Solo"
-description: "Tentang Paguyuban Linux Solo (Linux Solo User Group / Linux Solo) adalah sebuah komunitas terbuka yang beranggotakan para pengguna, pegiat, serta pemerhati sistem operasi GNU/Linux dan perangkat lunak bebas (Free and Open Source Software/FOSS) di wilayah Surakarta (Solo) dan sekitarnya. Didirikan dengan semangat berbagi pengetahuan, komunitas ini menjadi wadah bagi siapa saja yang ingin belajar,"
+description: "Paguyuban Linux Solo adalah komunitas terbuka pengguna, pemerhati, dan pengembang GNU/Linux serta FLOSS di wilayah Solo Raya. Kenali kami di sini."
 draft: false
 ---
 # Tentang

@@ -5,6 +5,7 @@ import { url } from '../consts';
 // Album dari dokumentasi asli di media library situs lama (nama event dari
 // caption/alt WordPress dan judul post liputannya).
 const U = url('/images/uploads');
+const thumb = (src: string) => src.replace('/images/uploads/', '/images/thumbs/');
 const albums = [
   {
     title: 'Pengenalan FLOSS di FOSTISIDA, FOSTI UMS',
@@ -107,7 +108,7 @@ const albums = [
             {album.photos.map((src, i) => (
               <a href={src} class="block rounded-md overflow-hidden group">
                 <img
-                  src={src}
+                  src={thumb(src)}
                   alt={`Foto ${i + 1} - ${album.title}`}
                   width="480"
                   height="360"
