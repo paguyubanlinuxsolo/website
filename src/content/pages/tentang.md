@@ -9,7 +9,7 @@ draft: false
 ---
 # Tentang
 
-**Paguyuban Linux Solo (Linux Solo User Group / Linux Solo)** adalah sebuah komunitas terbuka yang beranggotakan para pengguna, pegiat, serta pemerhati sistem operasi **GNU/Linux** dan perangkat lunak bebas (Free and Open Source Software/FOSS) di wilayah **Surakarta (Solo) dan sekitarnya**.
+**Paguyuban Linux Solo (Solo Linux User Group / Linux Solo)** adalah sebuah komunitas terbuka yang beranggotakan para pengguna, pegiat, serta pemerhati sistem operasi **GNU/Linux** dan perangkat lunak bebas (Free and Open Source Software/FOSS) di wilayah **Surakarta (Solo) dan sekitarnya**.
 
 Didirikan dengan semangat berbagi pengetahuan, komunitas ini menjadi wadah bagi siapa saja yang ingin belajar, berdiskusi, dan mengembangkan keterampilan dalam bidang teknologi berbasis **Open Source**.
 
