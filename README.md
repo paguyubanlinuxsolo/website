@@ -2,6 +2,8 @@
 
 Situs statis [Astro](https://astro.build) + [Decap CMS](https://decapcms.org), hasil migrasi dari WordPress (linuxsolo.or.id).
 
+Mau menulis artikel? Lihat **[KONTRIBUTOR.md](KONTRIBUTOR.md)** — tidak perlu coding.
+
 ## Menjalankan lokal
 
 ```bash
