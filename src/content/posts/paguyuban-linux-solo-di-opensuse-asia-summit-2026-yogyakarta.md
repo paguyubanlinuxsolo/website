@@ -10,6 +10,6 @@ categories:
   - event
   - dokumentasi
 tags: []
-draft: true
+draft: false
 ---
 Hello Words,
