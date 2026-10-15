@@ -1,6 +1,6 @@
 ---
 title: Paguyuban Linux Solo di openSUSE Asia Summit 2026
-slug: /osas2026-pls
+slug: /osas2026-pls-d
 pubDate: 2026-10-15T22:57:00.000+07:00
 updatedDate: 2026-10-15T22:57:00.000+07:00
 author: Paguyuban Linux Solo
