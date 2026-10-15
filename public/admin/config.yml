@@ -28,7 +28,7 @@ collections:
     sortable_fields: [pubDate, title]
     fields:
       - { name: title, label: Judul, widget: string }
-      - { name: slug, label: Slug (URL), widget: string, hint: 'huruf-kecil-dengan-strip, menentukan alamat /slug/' }
+      - { name: slug, label: Slug (URL), widget: string, hint: 'huruf-kecil-dengan-strip, menentukan alamat /slug/', pattern: ['^[a-z0-9-]+$', 'hanya huruf kecil, angka, dan tanda minus (tanpa garis miring)'] }
       - { name: pubDate, label: Tanggal terbit, widget: datetime }
       - { name: updatedDate, label: Tanggal diperbarui, widget: datetime, required: false }
       - name: author
@@ -62,7 +62,7 @@ collections:
     slug: '{{slug}}'
     fields:
       - { name: title, label: Judul, widget: string }
-      - { name: slug, label: Slug (URL), widget: string }
+      - { name: slug, label: Slug (URL), widget: string, pattern: ['^[a-z0-9-]+$', 'hanya huruf kecil, angka, dan tanda minus (tanpa garis miring)'] }
       - { name: pubDate, label: Tanggal dibuat, widget: datetime }
       - { name: updatedDate, label: Tanggal diperbarui, widget: datetime, required: false }
       - { name: author, label: Penulis, widget: string, default: 'Paguyuban Linux Solo' }

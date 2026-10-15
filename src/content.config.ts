@@ -4,7 +4,8 @@ import { z } from 'astro/zod';
 
 const common = {
   title: z.string(),
-  slug: z.string(),
+  // penulis kadang mengisi slug dengan garis miring ("/osas-2026-pls/") — normalisasi di sini
+  slug: z.string().transform((s) => s.replace(/^\/+|\/+$/g, '')),
   pubDate: z.coerce.date(),
   updatedDate: z.coerce.date().optional(),
   author: z.string().default('Paguyuban Linux Solo'),
