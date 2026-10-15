@@ -51,7 +51,6 @@ collections:
           - { label: Dokumentasi, value: dokumentasi }
         default: [artikel]
       - { name: tags, label: Tag, widget: list, required: false, default: [] }
-      - { name: draft, label: Draft (jangan terbitkan), widget: boolean, default: false }
       - { name: body, label: Isi tulisan, widget: markdown }
 
   - name: pages
@@ -68,7 +67,6 @@ collections:
       - { name: author, label: Penulis, widget: string, default: 'Paguyuban Linux Solo' }
       - { name: description, label: Deskripsi singkat (SEO), widget: text, required: false }
       - { name: heroImage, label: Gambar utama, widget: image, required: false }
-      - { name: draft, label: Draft (jangan terbitkan), widget: boolean, default: false }
       - { name: body, label: Isi halaman, widget: markdown }
 
   - name: authors
